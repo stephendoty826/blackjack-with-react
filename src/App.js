@@ -18,7 +18,8 @@ const App = () => {
       Increment Count by:
       <input onChange={(e) => setNumber(e.target.value)}></input>
       <br/>
-      <Button onClick={() => incrementCountBy(number)} >Increment</Button>
+      {/* <Button onClick={() => incrementCountBy(number)} >Increment</Button> */}
+      <Button onClick={() => setCount(count + parseInt(number))} >Increment</Button>
       <Button onClick={() => setCount(0)} variant="secondary">Reset</Button>
 
       <Button onClick={() => setCount(count - 1)} variant="danger">Decrement</Button>
