@@ -1,20 +1,21 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Card from "./Card";
 
-const DealerHand = ({add}) => {
+const DealerHand = ({ dealerHandArr }) => {
+
   return (
     <div>
       <div className="label-container d-flex">
         <label>Dealer:</label>
-        <div className="ps-2" id="dealer-points">
-          ???
-        </div>
+        <div className="ps-2">???</div>
       </div>
-      <div className="hand" id="dealer-hand">
-        <Card add={add}/>
+      <div className="hand">
+        {dealerHandArr.map(cardObj => {
+          return <Card cardObj={cardObj} />
+        })}
       </div>
     </div>
   );
-}
+};
 
 export default DealerHand

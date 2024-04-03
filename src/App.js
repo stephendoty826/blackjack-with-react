@@ -1,31 +1,56 @@
-import React, {useState} from 'react';
-import Button from 'react-bootstrap/Button';
+import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
+import PlayerHand from "./components/PlayerHand";
+import DealerHand from "./components/DealerHand";
+import { shuffledDecks } from "./gamelogic";
 
 const App = () => {
+  let [playerHandArr, setPlayerHandArr] = useState([]);
+  let [dealerHandArr, setDealerHandArr] = useState([]);
 
-  const [number, setNumber] = useState(0)
-  const [count, setCount] = useState(0)
+  
+  const handleDealClick = () => {
+    
+    let tempPlayerHandArr = [];
+    let tempDealerHandArr = [];
 
-  const incrementCountBy = (num) => {
-    let number = parseInt(num)
-    setCount(count + number)
-  }
+    tempPlayerHandArr.push(shuffledDecks.pop());
+    tempDealerHandArr.push(shuffledDecks.pop());
+    tempPlayerHandArr.push(shuffledDecks.pop());
+    tempDealerHandArr.push(shuffledDecks.pop());
 
+    setPlayerHandArr(tempPlayerHandArr);
+    setDealerHandArr(tempDealerHandArr);
+
+  };
+
+  console.log(playerHandArr)
 
   return (
-    <>
-      <div>Count: {count}</div>
-      Increment Count by:
-      <input onChange={(e) => setNumber(e.target.value)}></input>
-      <br/>
-      {/* <Button onClick={() => incrementCountBy(number)} >Increment</Button> */}
-      <Button onClick={() => setCount(count + parseInt(number))} >Increment</Button>
-      <Button onClick={() => setCount(0)} variant="secondary">Reset</Button>
+    <div className="container main-container d-flex justify-content-center flex-column">
+      <div className="messageContainer">
+        <div id="message">Messages will be displayed here</div>
+      </div>
+      <DealerHand dealerHandArr={dealerHandArr} />
 
-      <Button onClick={() => setCount(count - 1)} variant="danger">Decrement</Button>
-    </>
-    
-  )
-}
+      <br />
 
-export default App
+      <PlayerHand playerHandArr={playerHandArr} />
+
+      {/* Buttons */}
+      <div className="d-flex justify-content-center w-100 pt-3">
+        <div className="button-container">
+          <Button onClick={handleDealClick} variant="primary">
+            Deal
+          </Button>
+          <Button variant="secondary" className="mx-2">
+            Hit
+          </Button>
+          <Button variant="success">Stand</Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default App;

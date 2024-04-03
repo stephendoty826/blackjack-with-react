@@ -1,11 +1,10 @@
 import React from 'react'
 
-const Card = ({add}) => {
+const Card = ({ cardObj }) => {
 
-  console.log(add(3, 5))
   return (
     <div>
-      <img src="images/2_of_clubs.png" className="card" alt="" />
+      <img src={cardObj.imagePath} className="card" alt="" />
     </div>
   );
 }
