@@ -1,20 +1,7 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import Card from "./Card";
 
-const Hand = ({ handArr, title }) => {
-
-  let [points, setPoints] = useState(0)
-
-  useEffect(() => {
-    calculatePoints();
-  }, [handArr]);
-
-  function calculatePoints() {
-    let tempPoints = handArr.reduce((acc, cur) => {
-      return acc + cur.points;
-    }, 0);
-    setPoints(tempPoints);
-  }
+const Hand = ({ handArr, title, points }) => {
 
   return (
     <div>
