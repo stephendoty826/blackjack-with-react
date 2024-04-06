@@ -1,41 +1,36 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
-import PlayerHand from "./components/PlayerHand";
-import DealerHand from "./components/DealerHand";
+import Hand from "./components/Hand"
 import { shuffledDecks } from "./gamelogic";
 
 const App = () => {
-  let [playerHandArr, setPlayerHandArr] = useState([]);
-  let [dealerHandArr, setDealerHandArr] = useState([]);
-
+  let [playerHandArr, setPlayerHandArr] = useState([])
+  let [dealerHandArr, setDealerHandArr] = useState([])
   
   const handleDealClick = () => {
-    
-    let tempPlayerHandArr = [];
-    let tempDealerHandArr = [];
 
-    tempPlayerHandArr.push(shuffledDecks.pop());
-    tempDealerHandArr.push(shuffledDecks.pop());
-    tempPlayerHandArr.push(shuffledDecks.pop());
-    tempDealerHandArr.push(shuffledDecks.pop());
+    // first card goes to the player then next the dealer and so on (per the rules of blackjack)
+    let firstPlayerCard = shuffledDecks.pop();
+    let firstDealerCard = shuffledDecks.pop();
+    let secondPlayerCard = shuffledDecks.pop();
+    let secondDealerCard = shuffledDecks.pop();
 
-    setPlayerHandArr(tempPlayerHandArr);
-    setDealerHandArr(tempDealerHandArr);
+    setPlayerHandArr([firstPlayerCard, secondPlayerCard])
+    setDealerHandArr([firstDealerCard, secondDealerCard])
 
   };
-
-  console.log(playerHandArr)
 
   return (
     <div className="container main-container d-flex justify-content-center flex-column">
       <div className="messageContainer">
         <div id="message">Messages will be displayed here</div>
       </div>
-      <DealerHand dealerHandArr={dealerHandArr} />
+      {/* Dealer Hand */}
+      <Hand handArr={dealerHandArr} title="Dealer" />
 
       <br />
-
-      <PlayerHand playerHandArr={playerHandArr} />
+      {/* Player Hand */}
+      <Hand handArr={playerHandArr} title="Player" />
 
       {/* Buttons */}
       <div className="d-flex justify-content-center w-100 pt-3">
