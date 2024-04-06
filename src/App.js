@@ -1,11 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Hand from "./components/Hand"
-import { shuffledDecks } from "./gamelogic";
+import { shuffledDecks, calculatePoints, checkForBust } from "./gamelogic";
 
 const App = () => {
+  let [message, setMessage] = useState("Messages will be displayed here");
   let [playerHandArr, setPlayerHandArr] = useState([])
   let [dealerHandArr, setDealerHandArr] = useState([])
+  let [playerPoints, setPlayerPoints] = useState(0)
+  let [dealerPoints, setDealerPoints] = useState(0)
+
+  useEffect(() => {
+    calculatePoints(playerHandArr, setPlayerPoints);
+    calculatePoints(dealerHandArr, setDealerPoints);
+  }, [playerHandArr, dealerHandArr])
+
+  useEffect(() => {
+  checkForBust(playerPoints, dealerPoints, setMessage);
+}, [playerPoints, dealerPoints])
   
   const handleDealClick = () => {
 
@@ -20,17 +32,36 @@ const App = () => {
 
   };
 
+  function handleHitClick(){
+    let tempPlayerHandArr = [...playerHandArr]
+
+    tempPlayerHandArr.push(shuffledDecks.pop())
+
+    setPlayerHandArr(tempPlayerHandArr)
+
+  }
+
   return (
     <div className="container main-container d-flex justify-content-center flex-column">
       <div className="messageContainer">
-        <div id="message">Messages will be displayed here</div>
+        <div id="message">{message}</div>
       </div>
       {/* Dealer Hand */}
-      <Hand handArr={dealerHandArr} title="Dealer" />
+      <Hand
+        handArr={dealerHandArr}
+        title="Dealer"
+        points={dealerPoints}
+        setPoints={setDealerPoints}
+      />
 
       <br />
       {/* Player Hand */}
-      <Hand handArr={playerHandArr} title="Player" />
+      <Hand
+        handArr={playerHandArr}
+        title="Player"
+        points={playerPoints}
+        setPoints={setPlayerPoints}
+      />
 
       {/* Buttons */}
       <div className="d-flex justify-content-center w-100 pt-3">
@@ -38,7 +69,7 @@ const App = () => {
           <Button onClick={handleDealClick} variant="primary">
             Deal
           </Button>
-          <Button variant="secondary" className="mx-2">
+          <Button onClick={handleHitClick} variant="secondary" className="mx-2">
             Hit
           </Button>
           <Button variant="success">Stand</Button>

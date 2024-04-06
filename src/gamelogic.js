@@ -54,5 +54,20 @@ const shuffleDeck = (deck) => {
   return deck;
 }
 
+export function calculatePoints(handArr, setPoints) {
+  let tempPoints = handArr.reduce((acc, cur) => {
+    return acc + cur.points;
+  }, 0);
+  setPoints(tempPoints);
+}
+
+export const checkForBust = (playerPoints, dealerPoints, setMessage) => {
+  if (playerPoints > 21) {
+    setMessage("Player Busted. Dealer Wins.");
+  }
+  if (dealerPoints > 21) {
+    setMessage("Dealer Busted. Player Wins.");
+  }
+};
 
 export let shuffledDecks = shuffleDeck(buildDecks(3))
