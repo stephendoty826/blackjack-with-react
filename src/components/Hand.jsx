@@ -16,8 +16,6 @@ const Hand = ({ handArr, title }) => {
     setPoints(tempPoints);
   }
 
-  console.log(points)
-
   return (
     <div>
       <div className="label-container d-flex">
