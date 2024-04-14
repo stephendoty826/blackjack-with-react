@@ -56,8 +56,6 @@ const App = () => {
       setDealerHandArr(tempDealerHandArr);
 
       tempDealerPoints += card.points
-
-      console.log(tempDealerPoints, card.points)
     }
 
   }
