@@ -16,8 +16,8 @@ const App = () => {
   }, [playerHandArr, dealerHandArr])
 
   useEffect(() => {
-  checkForBust(playerPoints, dealerPoints, setMessage);
-}, [playerPoints, dealerPoints])
+    checkForBust(playerPoints, dealerPoints, setMessage);
+  }, [playerPoints, dealerPoints])
   
   const handleDealClick = () => {
 
@@ -38,6 +38,25 @@ const App = () => {
     tempPlayerHandArr.push(shuffledDecks.pop())
 
     setPlayerHandArr(tempPlayerHandArr)
+
+  }
+
+  function handleStandClick(){
+    let tempDealerHandArr = [...dealerHandArr];
+
+    let tempDealerPoints = dealerPoints
+
+    //while loop
+    while (tempDealerPoints < 17) {
+      //give dealer a new card as long as the dealers total points is less than 17
+      let card = shuffledDecks.pop()
+
+      tempDealerHandArr.push(card);
+
+      setDealerHandArr(tempDealerHandArr);
+
+      tempDealerPoints += card.points
+    }
 
   }
 
@@ -72,7 +91,9 @@ const App = () => {
           <Button onClick={handleHitClick} variant="secondary" className="mx-2">
             Hit
           </Button>
-          <Button variant="success">Stand</Button>
+          <Button onClick={handleStandClick} variant="success">
+            Stand
+          </Button>
         </div>
       </div>
     </div>
